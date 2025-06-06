@@ -1,0 +1,3 @@
+class RobloxException(Exception):
+    pass
+
