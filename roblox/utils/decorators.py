@@ -1,9 +1,11 @@
-# def make_url(link: str):
-#     def decorator(func: callable):
-#         def wrapper(*args, **kwargs):
-#             kwargs.update({"_url": link})
-#             func(*args, **kwargs)
-#
-#         return wrapper
-#     return decorator
+def make_docs(name: str, description: str):
+    def decorator(func):
+        setattr(func, "_IS_API", True)
+        func.__doc__ = f"{name}:\n{description}"
+        return func
 
+    return decorator
+
+
+def make_api_function():
+    pass
