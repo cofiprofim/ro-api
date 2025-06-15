@@ -1,4 +1,4 @@
-from ...utils.dataclass_make import item_dataclass, param
+from roblox.utils.decorators.dataclass_maker import item_dataclass, param
 
 
 @item_dataclass
