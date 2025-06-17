@@ -68,7 +68,11 @@ def _load_fields(cls, has_id, id_key) -> dict[str, param]:
             fields.update({n: param(key_name=n)})
 
     for n, v in cls.__dict__.items():
-        if not n.startswith("_") and n not in fields:
+        if (
+            not callable(v)
+            and not n.startswith("_")
+            and n not in fields
+        ):
             if not isinstance(v, param):
                 raise AttributeError(f"You can't set a class attribute with not param class value ({n})")
 
@@ -93,9 +97,14 @@ def _process_class(cls, has_id, id_key, format_type):
             fields_attr.update(fields)
 
         if cls is self.__class__:
-            for field_name, field in self._FIELDS.items():
+            for field_name, field in self._FIELDS.copy().items():
                 field.key_name = field.format_key_name(format_type)
-                setattr(self, field_name, field.fetch_value(data))
+                val = field.fetch_value(data)
+
+                if field.optional and val is None:
+                    self._FIELDS.pop(field_name)
+                else:
+                    setattr(self, field_name, val)
 
         # if exclude_params:
         #     if is_base:
