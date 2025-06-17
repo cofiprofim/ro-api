@@ -1,8 +1,8 @@
 from roblox import RobloxClient
 
 client = RobloxClient()
-games_iterator = client.fetch_games(10916243)
+games_iterator = client.fetch_games(324324)
 
 
-for games_batch in games_iterator:
-    print(games_batch)
+print(games_iterator)
+
