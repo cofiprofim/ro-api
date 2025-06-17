@@ -13,22 +13,17 @@ from ..utils.cursor_iterator import CursorIterator
 from ..utils.decorators import make_docs
 
 
-class GamesApi:
-    @staticmethod
-    @make_docs("Fetch user's created games", "Yea")
-    def fetch_user_games(user_id: int, client: RobloxClient = None) -> CursorIterator:
-        return CursorIterator(
-            games.v2.add_path("users", user_id, "games"),
-            client=client,
-            handler=lambda x: map(BaseGame, x)
-        )
+@make_docs("Fetch user's created games", "Yea")
+def fetch_user_games(user_id: int, client: RobloxClient = None) -> CursorIterator:
+    return CursorIterator(
+        games.v2.add_path("users", user_id, "games"),
+        client=client,
+        handler=lambda x: map(BaseGame, x)
+    )
 
-    @staticmethod
-    @make_docs("d", "ds")
-    def fetch_games(games_ids: Union[int, List[int]], client: RobloxClient = None) -> List[Game]:
-        response = client.request(
-            "GET",
-            games.v1.add_path("games").add_kwargs(universeIds=(games_ids,))
-        ).json()
-        return [Game(game_data) for game_data in response["data"]]
-
+@make_docs("d", "ds")
+def fetch_games(games_ids: Union[int, List[int]], client: RobloxClient = None) -> List[Game]:
+    response = client.get(
+        games.v1.add_path("games").add_kwargs(universeIds=(games_ids,))
+    ).json()
+    return [Game(game_data) for game_data in response["data"]]
