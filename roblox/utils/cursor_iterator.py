@@ -35,8 +35,7 @@ class CursorIterator:
         if self.next_page_cursor is None:
             raise StopIteration
 
-        response = self.client.request(
-            "GET",
+        response = self.client.get(
             self.url.add_kwargs(cursor=self.next_page_cursor)
         ).json()
 

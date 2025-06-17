@@ -64,5 +64,3 @@ class LoadDomain:
         return self.domain
 
     __str__ = __repr__
-games = LoadDomain("games", versions_limit=2)
-games.v1
