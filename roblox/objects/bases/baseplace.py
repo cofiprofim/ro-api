@@ -1,6 +1,7 @@
-from roblox.utils.decorators.dataclass_maker import item_dataclass, param
+from .. import item_dataclass, param
+from . import BaseItem, ClientAttr
 
 
 @item_dataclass
-class BaseRootPlace:
+class BaseRootPlace(BaseItem, ClientAttr):
     type: str = param(optional=True)

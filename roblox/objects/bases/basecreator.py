@@ -1,6 +1,7 @@
 from enum import Enum
 
 from .. import item_dataclass, param
+from . import BaseItem, ClientAttr
 
 
 class CreatorType(Enum):
@@ -13,5 +14,5 @@ class CreatorType(Enum):
 
 
 @item_dataclass
-class BaseCreator:
+class BaseCreator(BaseItem, ClientAttr):
     type: CreatorType = param(handler=CreatorType)
