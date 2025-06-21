@@ -1,16 +1,17 @@
 from __future__ import annotations
-import itertools
 
 from typing import TYPE_CHECKING, Union, List
 
 if TYPE_CHECKING:
-    from ..robloxclient import RobloxClient
+    from roblox.robloxclient import RobloxClient
 
-from ..objects.bases import BaseGame
-from ..objects import Game
-from ..utils.subdomains import games
-from ..utils.cursor_iterator import CursorIterator
-from ..utils.decorators import make_docs
+from roblox.utils.subdomains import games
+from roblox.utils.decorators import make_docs
+
+
+from roblox.objects.game import Game
+from roblox.objects.bases.basegame import BaseGame
+from roblox.utils.cursor_iterator import CursorIterator
 
 
 @make_docs("Fetch user's created games", "Yea")
@@ -20,6 +21,7 @@ def fetch_user_games(user_id: int, client: RobloxClient = None) -> CursorIterato
         client=client,
         handler=lambda x: map(BaseGame, x)
     )
+
 
 @make_docs("d", "ds")
 def fetch_games(games_ids: Union[int, List[int]], client: RobloxClient = None) -> List[Game]:
