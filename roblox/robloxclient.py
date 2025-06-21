@@ -2,26 +2,9 @@ from httpx import URL, Response, Client
 import functools
 
 from .utils.subdomains import LoadUrl
-
+from .api.games import fetch_user_games
 
 from typing import Union
-
-# def func(self):
-#     import importlib
-#
-#     mod = importlib.import_module("roblox.api.games")
-#
-#
-#     class t(type):
-#
-#
-#     class games(metaclass=t):
-#         pass
-#
-#     for n, f in mod.__dict__.items():
-#         if hasattr(f, "_IS_API"):
-#             setattr(games, n, f)
-#     return games
 
 
 class RobloxClient(Client):
@@ -44,5 +27,4 @@ class RobloxClient(Client):
                 url: Union[URL, str, LoadUrl], **kwargs) -> Response:
         return super().request(method, str(url), **kwargs)
 
-    from .api.games import fetch_games, fetch_user_games
-
+    fetch_user_games = fetch_user_games
