@@ -48,11 +48,8 @@ class param:
                 return self.key_name
 
 
-def _load_fields(cls, has_id, id_key) -> dict[str, param]:
+def _load_fields(cls) -> dict[str, param]:
     fields = dict()
-
-    if has_id:
-        fields.update({"id": param(key_name=id_key or "id")})
 
     for n in cls.__annotations__.keys():
         val: param = getattr(cls, n, None)
@@ -81,8 +78,8 @@ def _load_fields(cls, has_id, id_key) -> dict[str, param]:
     return fields
 
 
-def _process_class(cls, has_id, id_key, format_type):
-    fields = _load_fields(cls, has_id, id_key)
+def _process_class(cls, format_type):
+    fields = _load_fields(cls)
 
     def __init__(self, data: dict) -> None:
         try:
@@ -121,17 +118,26 @@ def _process_class(cls, has_id, id_key, format_type):
             ', '.join([f"{n}={getattr(self, n, None)!r}"
                        for n in self._FIELDS.keys()])) + ")"
 
+    def __getattribute__(item: str):
+        attr = super().__getattribute__(item)
+
+        if callable(attr) and not attr.__name__.startswith("_"):
+            import inspect, functools
+            args = inspect.getfullargspec(attr).args
+            if "game_id" in args:
+                return functools.partial(attr, game_id=self.id)
+
     cls.__init__ = __init__
     cls.__repr__ = __repr__
+    # cls.__getattribute__ = __getattribute__
+
     return cls
 
 
 def item_dataclass(cls=None, /, *,
-                   has_id: bool = True,
-                   id_key: str = None,
                    format_type: FormatType = FormatType.default):
     def wrapper(new_cls):
-        return _process_class(new_cls, has_id, id_key, format_type)
+        return _process_class(new_cls, format_type)
 
     if cls is None:
         return wrapper
