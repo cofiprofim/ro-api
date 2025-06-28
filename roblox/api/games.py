@@ -10,6 +10,7 @@ from typing import Union, List
 from roblox.utils.subdomains import games
 from roblox.utils.decorators import make_docs
 
+from .._api.games import fetch_game_media
 
 from roblox.objects.game import Game
 from roblox.objects.bases.basegame import BaseGame
