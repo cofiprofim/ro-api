@@ -21,7 +21,8 @@ def fetch_user_games(user_id: BaseId, client: ClientType = None) -> CursorIterat
     return CursorIterator(
         games_domain.v2.add_path("users", user_id, "games"),
         client=client,
-        handler=lambda x: map(BaseGame, x)
+        handler=BaseGame,
+        handler_kwargs={"client": client}
     )
 
 
