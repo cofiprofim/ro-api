@@ -81,7 +81,8 @@ def _load_fields(cls) -> dict[str, param]:
 def _process_class(cls, format_type):
     fields = _load_fields(cls)
 
-    def __init__(self, data: dict) -> None:
+    def __init__(self, data: dict, client=None) -> None:
+        self._client = client
         try:
             super(cls, self).__init__(data)
         except TypeError:
