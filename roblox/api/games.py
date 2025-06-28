@@ -16,9 +16,8 @@ from roblox.objects.game import Game
 from roblox.objects.bases.basegame import BaseGame
 from roblox.utils.cursor_iterator import CursorIterator
 
-
-@make_docs("Fetch user's created games", "Yea")
-def fetch_user_games(user_id: int, client: RobloxClient = None) -> CursorIterator:
+@make_docs(description="Fetch user's created games")
+def fetch_user_games(user_id: BaseId, client: ClientType = None) -> CursorIterator:
     return CursorIterator(
         games.v2.add_path("users", user_id, "games"),
         client=client,
@@ -26,8 +25,8 @@ def fetch_user_games(user_id: int, client: RobloxClient = None) -> CursorIterato
     )
 
 
-@make_docs("d", "ds")
-def fetch_games(games_ids: Union[int, List[int]], client: RobloxClient = None) -> List[Game]:
+@make_docs(description="hi")
+def fetch_games(games_ids: Union[int, List[int]], client: ClientType = None) -> List[Game]:
     response = client.get(
         games.v1.add_path("games").add_kwargs(universeIds=(games_ids,))
     ).json()
