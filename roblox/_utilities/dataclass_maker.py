@@ -119,18 +119,8 @@ def _process_class(cls, format_type):
             ', '.join([f"{n}={getattr(self, n, None)!r}"
                        for n in self._FIELDS.keys()])) + ")"
 
-    def __getattribute__(item: str):
-        attr = super().__getattribute__(item)
-
-        if callable(attr) and not attr.__name__.startswith("_"):
-            import inspect, functools
-            args = inspect.getfullargspec(attr).args
-            if "game_id" in args:
-                return functools.partial(attr, game_id=self.id)
-
     cls.__init__ = __init__
     cls.__repr__ = __repr__
-    # cls.__getattribute__ = __getattribute__
 
     return cls
 
