@@ -1,9 +1,11 @@
-from __future__ import annotations
+from ..objects.bases.basegame import BaseGame
+from ..objects.game import Game
+from .._utilities.cursor_iterator import CursorIterator
+from .._utilities.types import BaseId, ClientType
+from .._utilities.subdomains import games_domain
+from .._utilities import make_docs
 
-from typing import TYPE_CHECKING, Union, List
-
-if TYPE_CHECKING:
-    from roblox.robloxclient import RobloxClient
+from typing import Union, List
 
 from roblox.utils.subdomains import games
 from roblox.utils.decorators import make_docs

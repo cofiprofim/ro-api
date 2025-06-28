@@ -1,10 +1,6 @@
-from __future__ import annotations
+import httpx
 
-from typing import Optional, Callable, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from ..robloxclient import RobloxClient
-
+from .types import OptionalClient
 from .subdomains import LoadUrl
 
 

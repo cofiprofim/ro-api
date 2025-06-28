@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-from . import BaseItem, ClientAttr
 from datetime import datetime
 
 from ..bases.basecreator import BaseCreator
@@ -10,9 +7,6 @@ from ...utils.decorators import make_docs
 from ...utils.timestamps import from_timestamp
 from ...utils.subdomains import games
 
-from typing import Optional, Literal, TYPE_CHECKING
-if TYPE_CHECKING:
-    from ... import RobloxClient
 
 
 @item_dataclass(format_type=FormatType.camel_case)
