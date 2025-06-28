@@ -19,7 +19,7 @@ from roblox.utils.cursor_iterator import CursorIterator
 @make_docs(description="Fetch user's created games")
 def fetch_user_games(user_id: BaseId, client: ClientType = None) -> CursorIterator:
     return CursorIterator(
-        games.v2.add_path("users", user_id, "games"),
+        games_domain.v2.add_path("users", user_id, "games"),
         client=client,
         handler=lambda x: map(BaseGame, x)
     )
@@ -28,6 +28,6 @@ def fetch_user_games(user_id: BaseId, client: ClientType = None) -> CursorIterat
 @make_docs(description="hi")
 def fetch_games(games_ids: Union[int, List[int]], client: ClientType = None) -> List[Game]:
     response = client.get(
-        games.v1.add_path("games").add_kwargs(universeIds=(games_ids,))
+        games_domain.v1.add_path("games").add_kwargs(universeIds=(games_ids,))
     ).json()
     return [Game(game_data) for game_data in response["data"]]
