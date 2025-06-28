@@ -21,6 +21,10 @@ class ClientAttr:
 class BaseItem:
     id: int
 
+    def __init__(self):
+        if not isinstance(self, BaseItem):
+            raise TypeError("BaseItem can't be initialized")
+
     def __init_subclass__(cls, id_key: Optional[str] = "id", **kwargs):
         cls._FIELDS = {"id": param(key_name=id_key)}
         super().__init_subclass__(**kwargs)
