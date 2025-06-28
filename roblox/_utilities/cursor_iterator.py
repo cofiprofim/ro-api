@@ -3,20 +3,22 @@ import httpx
 from .types import OptionalClient
 from .subdomains import LoadUrl
 
+from typing import Optional, Callable
+
 
 class CursorIterator:
     def __init__(
             self,
             url: LoadUrl,
             *,
-            client: Optional[RobloxClient] = None,
-            data_key: Optional[str] = "data",
+            client: OptionalClient = None,
+            data_key: str = "data",
             handler: Optional[Callable] = None,
             handler_kwargs: Optional[dict] = None
     ):
         self.url = url
 
-        self.client = RobloxClient() if client is None else client
+        self.client = httpx.Client() if client is None else client
         self.data_key = data_key
         self.handler = handler
         self.handler_kwargs = handler_kwargs or dict()
@@ -39,4 +41,5 @@ class CursorIterator:
         self.next_page_cursor = response["nextPageCursor"]
 
         data = response[self.data_key]
-        return self.handler(data, **self.handler_kwargs) if self.handler else data
+        return (self.handler(batch, **self.handler_kwargs) for batch in data) \
+            if self.handler else data
