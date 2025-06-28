@@ -1,11 +1,12 @@
 from datetime import datetime
 
+from .. import item_dataclass, param, FormatType
+from ..._utilities import from_timestamp
 from ..bases.basecreator import BaseCreator
 from ..bases.baseplace import BaseRootPlace
-from .. import item_dataclass, param, FormatType
-from ...utils.decorators import make_docs
-from ...utils.timestamps import from_timestamp
-from ...utils.subdomains import games
+from . import BaseItem, ClientAttr
+
+from typing import Optional
 
 
 from .._externals.games import GameMedia
@@ -21,9 +22,4 @@ class BaseGame(BaseItem, ClientAttr):
     updated: datetime = param(handler=from_timestamp)
     visits: int = param(key_name="placeVisits")
 
-    @make_docs("dsd", "dsds", False)
-    def fetch_game_media(self, client: RobloxClient = None) -> GameMedia:
-        response = client.get(
-            games.v1.add_path("games", self.id, "media")
-        ).json()
-        return GameMedia(response["data"][0])
+    from ..._api.games import fetch_game_media
