@@ -1,6 +1,6 @@
 import re
 
-from typing import NoReturn, Optional
+from typing import NoReturn, Optional, Union
 
 __all__ = ("LoadUrl", "LoadDomain")
 
@@ -43,7 +43,6 @@ class LoadUrl:
 
 class LoadDomain:
     base_domain = "roblox.com"
-
     v1: LoadUrl; v2: LoadUrl
 
     __slots__ = ("domain", "vers_limit")
@@ -53,7 +52,7 @@ class LoadDomain:
         self.domain = f"{sub_domain}.{self.base_domain}"
         self.vers_limit = versions_limit
 
-    def __getattr__(self, item) -> LoadUrl | NoReturn:
+    def __getattr__(self, item) -> Union[LoadUrl, NoReturn]:
         vers_num = re.fullmatch(r"[1-9]\d*(?=v)", item) or 0
         if self.vers_limit is None or int(vers_num) <= self.vers_limit:
             return LoadUrl(f"{self.domain}/{item}")
