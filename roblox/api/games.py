@@ -7,14 +7,9 @@ from .._utilities import make_docs
 
 from typing import Union, List
 
-from roblox.utils.subdomains import games
-from roblox.utils.decorators import make_docs
 
 from .._api.games import fetch_game_media
 
-from roblox.objects.game import Game
-from roblox.objects.bases.basegame import BaseGame
-from roblox.utils.cursor_iterator import CursorIterator
 
 @make_docs(description="Fetch user's created games")
 def fetch_user_games(user_id: BaseId, client: ClientType = None) -> CursorIterator:
